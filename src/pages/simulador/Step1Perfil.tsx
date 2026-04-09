@@ -22,7 +22,7 @@ export function Step1Perfil({ data, onChange, onNext }: Props) {
       <ProgressBar step={1} total={6} />
 
       <h2 className="font-display font-bold text-3xl mb-2">Perfil da Empresa</h2>
-      <p className="text-zinc-400 text-base mb-8">
+      <p className="text-zinc-200 text-base mb-8">
         Conte um pouco sobre o seu negócio para calibrarmos a simulação.
       </p>
 

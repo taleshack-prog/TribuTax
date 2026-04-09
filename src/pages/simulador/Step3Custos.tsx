@@ -105,7 +105,7 @@ export function Step3Custos({ data, onChange, onNext, onBack }: Props) {
         {/* Preview dinâmico */}
         {totalCustos > 0 && (
           <div className="border border-zinc-700 rounded-xl p-5 bg-zinc-900/60">
-            <p className="text-sm text-zinc-400 mb-1">Total de gastos mapeados</p>
+            <p className="text-sm text-zinc-300 mb-1">Total de gastos mapeados</p>
             <p className="text-3xl font-display font-bold text-white">
               {totalCustos.toFixed(1)}%
               <span className="text-base text-zinc-500 ml-2">do faturamento</span>
@@ -123,7 +123,7 @@ export function Step3Custos({ data, onChange, onNext, onBack }: Props) {
           <p className="text-base font-semibold text-white">
             Como são a maioria dos seus fornecedores?
           </p>
-          <p className="text-sm text-zinc-400 -mt-1">
+          <p className="text-sm text-zinc-300 -mt-1">
             Isso define quanto imposto você pode descontar das suas compras
           </p>
 
@@ -148,7 +148,7 @@ export function Step3Custos({ data, onChange, onNext, onBack }: Props) {
               </div>
               <div>
                 <p className="text-base font-semibold text-white">{f.label}</p>
-                <p className="text-sm text-zinc-400 mt-1">{f.desc}</p>
+                <p className="text-sm text-zinc-300 mt-1">{f.desc}</p>
               </div>
             </button>
           ))}

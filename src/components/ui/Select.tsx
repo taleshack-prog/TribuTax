@@ -24,7 +24,7 @@ export function Select({ label, options, hint, className, ...props }: SelectProp
           <option key={o.value} value={o.value}>{o.label}</option>
         ))}
       </select>
-      {hint && <span className="text-sm text-zinc-400">{hint}</span>}
+      {hint && <span className="text-sm text-zinc-300">{hint}</span>}
     </div>
   )
 }

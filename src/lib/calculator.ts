@@ -1,6 +1,6 @@
 import type { EmpresaPerfil, Receitas, Custos, PrecoMargem, ResultadoSimulacao } from '../types'
 
-const ALIQUOTA_IBS_CBS = 0.265 // 26.5% estimado EC 132/2023
+const ALIQUOTA_IBS_CBS = 0.265
 
 function calcularCargaAtual(regime: EmpresaPerfil['regime'], faturamento: number): number {
   switch (regime) {
@@ -23,7 +23,11 @@ function calcularCreditoPotencial(
     tipoFornecedor = 'misto',
   } = custos
 
-  const totalCustosPct = (insumosPct + servicosTomadosPct + aluguelPct + energiaPct) / 100
+  // Limita total de custos a 95% do faturamento
+  const totalCustosPct = Math.min(
+    (insumosPct + servicosTomadosPct + aluguelPct + energiaPct) / 100,
+    0.95
+  )
   const totalCustos = faturamento * totalCustosPct
 
   let fatorCredito = 1
@@ -79,18 +83,21 @@ export function calcularSimulacao(
   const cargaAtual  = calcularCargaAtual(regime, faturamento)
   const cargaBruta  = faturamento * ALIQUOTA_IBS_CBS
   const { potencial, perdido } = calcularCreditoPotencial(faturamento, custos)
-  const cargaEfetiva = cargaBruta - potencial
 
-  const cargaAtualPct  = faturamento > 0 ? (cargaAtual  / faturamento) * 100 : 0
-  const cargaNovaPct   = faturamento > 0 ? (cargaEfetiva / faturamento) * 100 : 0
+  // Crédito não pode ser maior que a carga bruta
+  const creditoReal  = Math.min(potencial, cargaBruta * 0.9)
+  const cargaEfetiva = Math.max(cargaBruta - creditoReal, 0)
+
+  const cargaAtualPct  = faturamento > 0 ? (cargaAtual   / faturamento) * 100 : 0
+  const cargaNovaPct   = faturamento > 0 ? (cargaEfetiva  / faturamento) * 100 : 0
   const diferencaPct   = cargaNovaPct - cargaAtualPct
 
-  const margemProjetadaPct = precoMedio > 0
-    ? ((precoMedio - custoMedio - (cargaEfetiva / (faturamento / precoMedio))) / precoMedio) * 100
-    : margemAtual - diferencaPct
+  // Margem projetada: desconta a diferença de carga
+  const margemProjetadaPct = Math.max(margemAtual - diferencaPct, 0)
 
-  const precoNeutro = custoMedio > 0 && margemAtual > 0
-    ? custoMedio / (1 - margemAtual / 100 - cargaNovaPct / 100)
+  // Preço neutro para manter a margem atual
+  const precoNeutro = precoMedio > 0 && custoMedio > 0 && margemAtual > 0
+    ? custoMedio / (1 - (margemAtual / 100) - (cargaNovaPct / 100))
     : 0
 
   const { nivel, alertas } = calcularRisco(receitas, custos, diferencaPct)
@@ -99,7 +106,7 @@ export function calcularSimulacao(
     cargaAtualPct,
     cargaNovaPct,
     diferencaPct,
-    creditoPotencial: potencial,
+    creditoPotencial: creditoReal,
     creditoPerdido:   perdido,
     cargaEfetiva,
     margemAtualPct:    margemAtual,

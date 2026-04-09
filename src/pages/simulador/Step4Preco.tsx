@@ -79,7 +79,7 @@ export function Step4Preco({ data, onChange, onNext, onBack }: Props) {
         {/* Preview margem */}
         {margemCalculada !== null && (
           <div className="border border-zinc-700 rounded-xl p-5 bg-zinc-900/60">
-            <p className="text-sm text-zinc-400 mb-1">Margem bruta calculada</p>
+            <p className="text-sm text-zinc-300 mb-1">Margem bruta calculada</p>
             <p className="text-3xl font-display font-bold text-gold-500">
               {margemCalculada.toFixed(1)}%
             </p>
@@ -104,7 +104,7 @@ export function Step4Preco({ data, onChange, onNext, onBack }: Props) {
           <p className="text-base font-semibold text-white">
             Se o imposto aumentar, você consegue repassar para o preço?
           </p>
-          <p className="text-sm text-zinc-400 -mt-1">
+          <p className="text-sm text-zinc-300 -mt-1">
             Isso define quem vai absorver o custo da reforma — você ou seu cliente
           </p>
 
@@ -129,7 +129,7 @@ export function Step4Preco({ data, onChange, onNext, onBack }: Props) {
               </div>
               <div>
                 <p className="text-base font-semibold text-white">{r.label}</p>
-                <p className="text-sm text-zinc-400 mt-1">{r.desc}</p>
+                <p className="text-sm text-zinc-300 mt-1">{r.desc}</p>
               </div>
             </button>
           ))}

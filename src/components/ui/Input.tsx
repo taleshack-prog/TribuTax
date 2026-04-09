@@ -12,14 +12,14 @@ export function Input({ label, hint, error, className, ...props }: InputProps) {
       <label className="text-base font-semibold text-white">{label}</label>
       <input
         className={clsx(
-          'bg-zinc-800 border rounded-xl px-4 py-4 text-white text-base placeholder-zinc-500',
+          'bg-zinc-800 border rounded-xl px-4 py-4 text-white text-base placeholder-zinc-400',
           'focus:outline-none focus:ring-2 focus:ring-gold-500 transition-all',
           error ? 'border-red-500' : 'border-zinc-600 hover:border-zinc-400',
           className
         )}
         {...props}
       />
-      {hint && <span className="text-sm text-zinc-400">{hint}</span>}
+      {hint && <span className="text-sm text-zinc-300">{hint}</span>}
       {error && <span className="text-sm text-red-400">{error}</span>}
     </div>
   )

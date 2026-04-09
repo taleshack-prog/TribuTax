@@ -94,7 +94,7 @@ export function Step2Receitas({ data, onChange, onNext, onBack }: Props) {
               </div>
               <div>
                 <p className="text-base font-semibold text-white">{item.label}</p>
-                <p className="text-sm text-zinc-400 mt-1">{item.desc}</p>
+                <p className="text-sm text-zinc-300 mt-1">{item.desc}</p>
               </div>
             </button>
           ))}
